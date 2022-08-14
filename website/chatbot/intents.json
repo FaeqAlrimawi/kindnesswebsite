@@ -4,7 +4,7 @@
 
         {"tag": "greeting",
         "patterns": ["Hi there", "How are you", "Is anyone there?", "Hello", "Good day", "hey", "what's up"],
-        "responses": ["Hello!", "Hi there, Hi, how can I help?"],
+        "responses": ["Hello!", "Hi there", "Hi, how can I help?"],
         "context": [""]
        },
        {"tag": "goodbye",
@@ -41,6 +41,14 @@
             "tag":"suggestAok",
             "patterns": ["suggest aok", "give me an aok", "tell me an act of kindness to do", "can you suggest an aok?", "what is an example of act of kindness?"],
             "responses":["here you go!", "please use this"]
+        },
+
+        {
+            "tag":"kindComputing",
+            "patterns": ["what is kind computing", "meaning of kind computing", "explain kind computing", "tell me about kind computing"],
+            "responses":["Kind Computing is a computing paradigm that explicitly incorporates kindness into digital technology"],
+            "responses2":["You can read more about it in this short paper => <a href=\"https://spare.lero.ie/wp-content/uploads/2022/02/Kind_Computing.pdf\" target=\"_blank\">Kind Computing</a>"]
         }
+
     ]
 }

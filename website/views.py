@@ -58,7 +58,7 @@ def chatbot():
         responses = get_response(text)
         message = {"answers": responses}
         
-        print("@@@ ", message)
+        # print("@@@ ", message)
         return jsonify(message)
         
             

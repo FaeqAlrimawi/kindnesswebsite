@@ -91,7 +91,10 @@ def get_response(sentence):
                         suggestedAok = suggestAoK(None)
                         return(suggestedAok)   
                     case _:
-                        return [random.choice(intent["responses"])]
+                        msgs =  [random.choice(intent["responses"])]
+                        if "responses2" in intent:
+                            msgs.append(random.choice(intent["responses2"]))
+                        return msgs    
 
     return ["I don't understand..."]
 

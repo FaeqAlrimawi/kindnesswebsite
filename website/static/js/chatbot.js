@@ -57,7 +57,7 @@ onSendButton(chatbox) {
      }
 
 
-     let msg1 = {name: "User", message: text1};
+     let msg1 = {name: "User", message: text1, delay:false};
 
      this.messages.push(msg1);
      let botName = this.name;
@@ -74,8 +74,8 @@ onSendButton(chatbox) {
         let answers = r.answers
 
         for (let index in answers) {
-            console.log("answer: " + answers[index]);
-            let msg2 = {name: botName, message: answers[index]};
+            // console.log("answer: " + answers[index]);
+            let msg2 = {name: botName, message: answers[index], delay:true};
             this.messages.push(msg2);
         }
         this.updateChatText(chatbox);
@@ -97,7 +97,13 @@ updateChatText(chatbox) {
    let botName = this.name;
     this.messages.slice().reverse().forEach(function(item) {
         if (item.name === botName) {
-            html += '<div class="messages__item messages__item--operator">' + item.message + '</div>';
+            if (item.delay) {
+                html += '<div class="messages__item messages__item--operator">Delay</div><div class="messages__item messages__item--operator">' + item.message + '</div>';
+                item.delay = false;    
+            } else {
+                html += '<div class="messages__item messages__item--operator">' + item.message + '</div>';
+            }
+           
         } else {
             html +='<div class="messages__item messages__item--visitor">' + item.message + '</div>';
         }
