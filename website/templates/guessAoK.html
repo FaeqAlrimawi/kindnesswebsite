@@ -1,0 +1,120 @@
+{% extends 'base.html' %} 
+{% block title %}Guess if AoK{% endblock%}
+
+
+{% block content%}
+
+<br/>
+
+<form method="POST" name="aok-form">
+<h3 align>Is my Act an Act of Kindness (AoK)?</h3>
+
+<input type="text" class="form-control" id="act" name="act" placeholder="Enter Act Description"/>
+
+<br/>
+
+<button type="submit" class="btn btn-primary" >Guess</button>
+
+</form>
+
+
+
+<!--
+<script type="text/javascript">
+    (uri => {
+      // Register a listener for submit events.
+      const form = document.querySelector('form[name="aok-form"]');
+      form.addEventListener('submit', evt => {
+        // Suppress the default behavior of the form.
+        evt.preventDefault();
+        console.log("###### submitting")
+        // Submit the form data.
+        fetch(uri, {
+          method: 'post',
+          body: new FormData(evt.target)
+        }).then(resp => resp.json())
+          .then(data => {
+            console.log("#######" + data);
+            // Handle response here.
+            var prob2 = prob
+            var element = document.getElementById("lbl-prob")
+            // const prob = JSON.parse(data)
+            //console.log("prooob: " + prob)
+            
+          });
+        // Reset the form.
+        evt.target.reset();
+      });
+    })({{ url_for('views.guessAoK') | tojson }});
+  </script>
+-->
+<br/>
+
+
+<div>
+    <label for="prob" id="lbl-prob">
+
+        {% if prob >= 0 %}
+        
+        <h3>Probability: {{"{:.2f}".format(prob) + "%"}}</h3>
+
+        {% endif %}
+    </label>
+</div>
+
+
+{% endblock%}
+
+<!--
+{% block script %}
+
+<script type="text/javascript">
+  (uri => {
+    // Register a listener for submit events.
+    const form = document.querySelector('form[name="aok-form"]');
+    form.addEventListener('submit', evt => {
+      // Suppress the default behavior of the form.
+      evt.preventDefault();
+      
+      // Submit the form data.
+      fetch(uri, {
+        method: 'post',
+        body: new FormData(evt.target)
+      }).then(resp => resp.json())
+        .then(data => {
+          console.log("#######" + data);
+          // Handle response here.
+          var prob2 = {{prob | tojson}}
+          console.log(prob2)
+          
+          // const prob = JSON.parse(data)
+          //console.log("prooob: " + prob)
+          
+        });
+      // Reset the form.
+      evt.target.reset();
+    });
+  })({{ url_for('views.guessAoK') | tojson }});
+</script>
+
+<script>
+  $("#aok-form").on("submit",function(e){
+      e.preventDefault();
+      $.ajax({
+          url : '/guessAok',
+          type: "POST",
+          data: $(this).serialize(),
+          success: function (data) {
+            
+              window.location.href = '/guessAok' + data.id;
+             
+          },
+          error: function (jXHR, textStatus, errorThrown) {
+            alert(errorThrown);
+          }
+      });
+  });
+  </script>
+
+{% endblock  %}
+-->

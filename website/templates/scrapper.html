@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% block title %}AoK Scrapper{% endblock  %}
+
+{% block header  %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/scrapper.css')}}">
+<script type="text/javascript" src="{{ url_for('static', filename='js/scrap.js') }}"></script>
+
+{% endblock  %}
+
+{% block  content %}
+
+
+<br/>
+<h3>Webpage</h3>
+
+<form method="POST" id="scrapForm">
+
+<input type="url" onblur="checkURL(this)" class="form-control" id="websiteURL" name="websiteURL" placeholder="Enter website URL" value="{{websiteURL}}"/>
+
+
+
+<br/>
+
+<button type="submit" class="btn btn-primary btn-block btn-lg" >Scrap</button>
+
+</form>
+
+<br/>
+<br/>
+
+  
+    {% if  websiteURL %}
+    <div class="collapsible" id="div-sitemap" >
+      
+        Scrapping: <a href="{{websiteURL}}" target="_blank"><b>{{websiteURL}}</b></a>
+       
+    </div>
+
+    {% if sitemap['sitemap'] %}
+    <div class="content" id="div-sitemap-content">
+        <br/>
+        <p style="font-size:110%;"> More webpages from <b><a href="{{baseURL}}">{{baseURL}}</a></b> (click <i class="fa-regular fa-file-lines"></i> to scrap)</p>
+        
+        <ul >
+        {% for  sitemapURL in sitemap['sitemap'] %}
+        {% set outer_loop = loop %}
+          <!--  <ul >
+                <li style="padding-bottom:1em"><a href="{{sitemapURL['url']}}" target="_blank">{{sitemapURL['url']}}</a></li>
+                -->
+                
+                {% for potentialURL in sitemapURL['sites'] %}
+                {% if  potentialURL['url'] != websiteURL %} 
+                <li style="padding-bottom:1em; display: block">
+                
+                    <a href="{{potentialURL['url']}}" target="_blank">{{potentialURL['url']}}</a>
+                    
+                    <div class="pull-right">
+                       
+                    {% if potentialURL['scrapped'] == False %}
+                        <i align="right" class="fa-solid fa-splotch" data-toggle="tooltip" title="New"></i>
+                        {% endif %}
+                        
+                        <span align="right"  class="fa-regular fa-file-lines" data-toggle="tooltip" title="Scrap" onClick="scrap('{{potentialURL['url']}}')"></span>
+
+                    </div>
+                    <!--<button type="button" class="close"  data-toggle="tooltip" title="Scrap" onClick="scrap('{{potentialURL['url']}}')">
+                    </button>-->
+               
+                </li>
+                {% endif %}
+                {% endfor %}
+            
+           <!-- </ul>-->
+        {% endfor %}
+    </ul>
+       
+    </div>
+
+    {% else  %}
+    <p class="content" id="div-sitemap=empty">
+        Could not retrieve sitemaps. Check: <a href="{{robotsURL}}" target="_blank">{{robotsURL}}</a>
+    </p>
+    {% endif %}
+
+    <br/><br/>
+
+<div >
+<button type="button" class="btn btn-outline-dark" onClick="add_Aoks()">Store <i class="fa-solid fa-circle-arrow-down"></i></button>
+
+<button type="button" id="btn-delete" title="Double click to delete" class="btn btn-outline-dark" onClick="notifyDoubleClick()" ondblclick="deleteAoKs()" style="padding-left:10px;" >
+  Delete <i class="fa-solid fa-trash-can"></i>
+</button>
+
+<label id="lbl-add" style="padding-left:10px;"></label>
+</div>
+
+
+<div id="myGrid" class="ag-theme-alpine" style="height:800px; padding-top:10px;  word-break: break-word;"></div>
+
+<script>
+
+ 
+  //console.log("testing " + data );
+  fillActsGrid("{{websiteURL}}");
+  </script>
+  
+
+    {% endif %}
+
+
+    
+{% endblock  %}
+
+
+{% block scripts %}
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight){
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        } 
+      });
+    }
+    </script>
+
+
+<script>  
+
+    $(document).ready(function(){
+        //$('#aoks').DataTable({
+
+        //});
+
+          //createActsGrid();
+          
+    });
+
+   /* $(document).on('submit','#scrapForm',function(e)
+      {
+      console.log($("#websiteURL").val());  
+     // console.log('hello');
+      e.preventDefault();
+      $.ajax({
+        type:'POST',
+        url:'/aok-scrapper',
+        data:JSON.stringify(websiteURL:$("#websiteURL").val()),
+        success:function(result)
+        {
+          
+          //console.log("result: " + result['acts_probs'][0]);
+          console.log('saved');
+        }
+      })
+    });*/
+
+</script>
+
+{% endblock %}
+
+

@@ -1,0 +1,125 @@
+{% extends 'base.html' %} 
+{% block title %}Acts of Kindness{% endblock%}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/listofAoK.css')}}">
+<script type="text/javascript" src="{{ url_for('static', filename='js/listofAoK.js') }}"></script>
+{% endblock %}
+
+
+{% block content%}
+
+<br/>
+
+<h2 align="center">Database Acts</h2>
+<br/>
+
+<div class="collapsible" id="div-kindness" >
+      
+    <b>Acts of Kindness</b>
+   
+</div>
+
+
+<div class="content" id="aoks">
+
+  <div id="myGrid" class="ag-theme-alpine" style="height:700px; padding-top:10px;"></div>
+
+</div>
+
+
+<br/><br/>
+
+
+<div class="collapsible" id="div-nonkindness" >
+      
+    <b>Non-Kindness Acts</b>
+   
+</div>
+
+
+<div class="content" id="nonaoks">
+
+  <div id="nonAokmyGrid" class="ag-theme-alpine" style="height:700px; padding-top:10px;"></div>
+
+</div>
+<!--<br/>
+<table id="nonaoks" class="table table-striped">
+<thead>
+    <tr>
+    <th>#</th>
+    <th>Description</th>
+    <th>Source</th>
+    <th>Date Added</th>
+    </tr>
+</thead>
+<tbody> 
+
+{% for nonaok in nonaoks %}
+<tr>
+    <th scope="row">{{ loop.index }}</th>
+    <td>{{nonaok.act}}</td>
+    <td>{{nonaok.source}}</td>
+    <td>{{nonaok.date}}</td>
+</tr>
+{% endfor %}
+
+</tbody>
+</table>-->
+
+
+
+{% endblock%}
+
+
+{% block scripts %}
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var col2 = document.getElementsByClassName("collapsible");
+
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight){
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        } 
+      });
+    }
+    </script>
+
+
+
+<script>
+    $(document).ready(function(){
+
+      fillAoKsGrid();
+      fillNonAoKsGrid();
+             /* $('#aoks').DataTable({
+                ajax: '/api/data',
+                serverSide: true,
+                columns: [
+                  {data: 'act'},
+                  {data: 'source'},
+                  {data: 'date'}
+                  //{data: 'phone', orderable: false},
+                //  {data: 'email'}
+                ],
+              });
+           
+
+       // $('#aoks').DataTable({
+
+        //});
+
+        $('#nonaoks').DataTable({
+
+        });*/
+    });
+</script>
+{% endblock %}

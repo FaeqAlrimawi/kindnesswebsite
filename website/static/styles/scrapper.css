@@ -1,0 +1,96 @@
+
+.collapsible {
+    background-color: rgb(31, 31, 31);
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+  
+  }
+  
+  .active, .collapsible:hover {
+    background-color: rgb(60, 60, 60);
+  }
+  
+  div.collapsible:after {
+    content: '\002BMore';
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+  }
+  
+  div.active:after {
+    content: "\2212More";
+  }
+  
+  .content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+  }
+
+    div >  a:link {
+        color: #0471a7;
+        text-decoration: none;
+    
+    
+    }
+    div >  a:visited {
+            text-decoration: none;
+    color: #75a6be;
+    
+    }
+    div > a:hover {
+    text-decoration: underline;
+    color: #da5f9e;
+    
+    }
+
+   
+
+    li:hover  {
+      
+      background-color: #fbfafa;
+    }
+
+
+    li> div > span {
+      cursor: pointer;
+      align-items: flex-end;
+    }
+
+    .ag-cell-wrap-text {
+      word-break: break-word;
+      line-height: 2;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}

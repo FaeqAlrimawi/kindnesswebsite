@@ -1,0 +1,36 @@
+{% extends 'base.html' %} 
+
+{% block title %}AoK Model{% endblock %}
+
+
+{% block content %}
+
+<br/>
+<h2 align="center"> NLP  Models for Kindness </h2>
+<br/>
+
+<table id="models" class="table table-striped">
+    <thead>
+        <tr>
+        <th>Description</th>
+        <th># of AoKs</th>
+        <th># of Non-AoKs</th>
+        </tr>
+    </thead>
+    <tbody> 
+    
+    {% if  models %}
+    {% for model in models %}
+    <tr>
+        <td>{{model[0]}}</td>
+        <td>{{model[1]}}</td>
+        <td>{{model[2]}}</td>
+    </tr>
+    
+    {% endfor %}
+    
+    </tbody>
+    </table>
+    {% endif %}
+  
+{% endblock %}

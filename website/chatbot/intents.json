@@ -1,0 +1,46 @@
+{
+
+    "intents": [
+
+        {"tag": "greeting",
+        "patterns": ["Hi there", "How are you", "Is anyone there?", "Hello", "Good day", "hey", "what's up"],
+        "responses": ["Hello!", "Hi there, Hi, how can I help?"],
+        "context": [""]
+       },
+       {"tag": "goodbye",
+        "patterns": ["Bye", "See you later", "Goodbye", "Nice chatting to you, bye", "Till next time"],
+        "responses": ["See you!", "Have a nice day", "Bye! Come back again soon."],
+        "context": [""]
+       },
+
+       {"tag": "thanks",
+        "patterns": ["Thanks", "Thank you", "That's helpful", "Awesome, thanks", "Thanks for helping me"],
+        "responses": ["Happy to help!", "Any time!", "My pleasure"],
+        "context": [""]
+       },
+
+       {"tag": "botIdentity",
+        "patterns": ["who are you?", "Why your name is Eleos", "Eleos?", "What does Eleos mean?", "nice name"],
+        "responses": ["I'm named after the greek Goddess <a href=\"https://www.theoi.com/Daimon/Eleos.html\" target=\"_blank\">Eleos</a> - the goddess of compassion and kindness."],
+        "context": [""]
+       },
+
+       {"tag": "noanswer",
+        "patterns": [],
+        "responses": ["Sorry, can't understand you", "Please give me more info", "Not sure I understand"],
+        "context": [""]
+       },
+
+       {"tag": "options",
+        "patterns": ["How you could help me?", "What you can do?", "What help you provide?", "How you can be helpful?", "What support is offered"],
+        "responses": ["I can tell you about Kind Computing, suggest acts of kindness for you, or guess if an act is a kind one :-)"],
+        "context": [""]
+       },
+        
+        {
+            "tag":"suggestAok",
+            "patterns": ["suggest aok", "give me an aok", "tell me an act of kindness to do", "can you suggest an aok?", "what is an example of act of kindness?"],
+            "responses":["here you go!", "please use this"]
+        }
+    ]
+}

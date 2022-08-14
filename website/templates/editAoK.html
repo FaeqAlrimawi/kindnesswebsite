@@ -1,0 +1,28 @@
+{% extends 'base.html' %} 
+{% block title %}Edit AoKs{% endblock%}
+{% block content%}
+
+<br/>
+<h1>Add Acts of Kindness</h1>
+
+<form method='POST'>
+<textarea name="aok" id='aok' class='form-control'></textarea>
+<br/>
+<div align='center'>
+<button type="submit" class="btn btn-primary">Add AoK</button>
+</div>
+</form>
+
+<br/>
+<br/>
+<ul class="list-group list-group-flush" id="aoks">
+    {% for aok in user.acts %} 
+    <li class="list-group-item">{{aok.act}}
+        <button type="button" class="close" onClick="delete_AoK({{aok.id}})">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor%}
+
+
+{% endblock%}

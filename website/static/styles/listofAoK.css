@@ -1,0 +1,67 @@
+
+.collapsible {
+    background-color: rgb(0, 0, 0);
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+  
+  }
+  
+  .active, .collapsible:hover {
+    background-color: rgb(20, 5, 70);
+  }
+  
+  div.collapsible:after {
+    content: '\002Btable';
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+  }
+  
+  div.active:after {
+    content: "\2212table";
+  }
+  
+  .content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #fffcfc;
+  }
+
+    div >  a:link {
+        color: #0471a7;
+        text-decoration: none;
+    
+    
+    }
+    div >  a:visited {
+            text-decoration: none;
+    color: #75a6be;
+    
+    }
+    div > a:hover {
+    text-decoration: underline;
+    color: #da5f9e;
+    
+    }
+
+   
+
+    li:hover *{
+      text-decoration: underline;
+      color: #da5f9e;
+    }
+
+
+    .ag-cell-wrap-text {
+      word-break: break-word;
+      line-height: 2;
+}
