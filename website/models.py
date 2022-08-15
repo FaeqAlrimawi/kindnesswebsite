@@ -76,7 +76,11 @@ class AokMedia(db.Model):
     media_id = db.Column(db.Integer, db.ForeignKey('media.id'))
     
     
-        
+class AokQuote(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    quote = db.Column(db.String(1000))
+    
+           
 class NonAok(db.Model):
     
     __name__ = "nonaok"

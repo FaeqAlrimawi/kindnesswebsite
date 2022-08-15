@@ -165,7 +165,7 @@ scrollToBottom() {
 // compute message loading duration
 getMessageLoadingDuration(message) {
 	//in here you could use message.length to show dots for longer duration based on the length of the message
-  const randomNum = message.length + Math.random() * 1000;
+  const randomNum = message.length + Math.random() * 2000;
   return Math.round(randomNum / 100) * 100;
 }
 
@@ -173,10 +173,13 @@ getMessageLoadingDuration(message) {
 createDots() {
 	const el = document.createElement('div');
   el.id = 'dotsDelay';
+  el.style = "display: flex;align-items: center;"
 	el.innerHTML = `
-  	<span>o</span>
-    <span>o</span>
-    <span>o</span>
+   
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div id="invisibleColumn"></div>
   `
   el.classList.add("messages__item");
   el.classList.add("messages__item--operator");
