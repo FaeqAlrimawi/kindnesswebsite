@@ -94,16 +94,6 @@ onSendButton(chatbox) {
 
 
 updateChatText(messages) {
-    // var html = "";
-    // const chatmessage = this.chatBox.querySelector('.chatbox__messages');
-    // let imageHeader = '<div class="chatbox__image--header"><img src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-5--v1.png"' +
-    //  'alt="image"></div><div class="chatbox__content--header">';
-
-//    let botName = this.name;
-//    let index = 0;
-//    let chatbot = this; 
-    // let msg = this.messages.pop(); 
-    // this.messages.slice().reverse().forEach(function(item) {
 
     if(messages.length == 0) {
         return;
@@ -115,32 +105,6 @@ updateChatText(messages) {
         this.writeVisitorMessage(messages, 0); 
     }
 
-   
-    
-    // for (let i=0;i<messages.length;i++) {
-    //     let operator_msgs =  [];
-    //     if (item.name === botName) {
-    //         operator_msgs.add(messages[i]);
-
-
-    //         chatbot.writeMessage([item], 0, true);
-    //         // html += '<div class="messages__item messages__item--operator">' + item.message + '</div>';
-    //         // if(index==0) {
-    //         //     chatbot.writeMessage([item], 0, true);
-    //         // } else {
-    //         //     chatbot.writeMessage([item], 0, false);
-    //         // }
-    //     } else {
-    //         html ='<div class="messages__item messages__item--visitor">' + item.message + '</div>';
-    //         chatmessage.innerHTML += html;
-    //     }
-
-    // }
-        
-        // index++;
-    // });
-
-    
 }
 
 
