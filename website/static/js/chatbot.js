@@ -165,7 +165,7 @@ scrollToBottom() {
 // compute message loading duration
 getMessageLoadingDuration(message) {
 	//in here you could use message.length to show dots for longer duration based on the length of the message
-  const randomNum = message.length + Math.random() * 2000;
+  const randomNum = message.length + Math.random() * 1000;
   return Math.round(randomNum / 100) * 100;
 }
 
