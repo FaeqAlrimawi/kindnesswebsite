@@ -7,6 +7,16 @@ from sqlalchemy.sql import func
 # from sqlalchemy import Enum
 import enum
 
+
+class MediaType(enum.Enum):
+        IMAGE = "Image"
+        VIDEO = "Video"
+        GIF = "GIF"
+        EMOJI = "Emoji"
+        EMOTICON = "Emoticon"
+        STICKER = "Sticker"
+              
+      
 class ActType(enum.Enum):
         NORMAL= "Normal Act"
         ANTI_SOCIAL = "Anit-Social Act"
@@ -29,8 +39,7 @@ class User(db.Model, UserMixin):
     non_aok_acts = db.relationship('NonAok')
     websites_scrapped = db.relationship('WebsiteScrapper')
     
-    
-    
+        
     
 class Aok(db.Model):
     
@@ -43,6 +52,7 @@ class Aok(db.Model):
     categories = db.relationship('AokCategories', cascade = 'all, delete-orphan', lazy = 'dynamic')
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     nlp_models = db.relationship('ModelAok', cascade = 'all, delete-orphan', lazy = 'dynamic')
+    media = db.relationship('AokMedia',  cascade = 'all, delete-orphan', lazy = 'dynamic')
     
     def to_dict(self):
         return {
@@ -53,7 +63,20 @@ class Aok(db.Model):
         }
     
     
-
+class Media(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    uri = db.Column(db.String(1000), unique=True)
+    type = db.Column(db.Enum(MediaType))
+    aoks = db.relationship('AokMedia',  cascade = 'all, delete-orphan', lazy = 'dynamic')
+    
+        
+class AokMedia(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)  
+    aok_id =  db.Column(db.Integer, db.ForeignKey('aok.id'))
+    media_id = db.Column(db.Integer, db.ForeignKey('media.id'))
+    
+    
+        
 class NonAok(db.Model):
     
     __name__ = "nonaok"

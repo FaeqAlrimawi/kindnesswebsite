@@ -39,7 +39,7 @@
         
         {
             "tag":"suggestAok",
-            "patterns": ["suggest aok", "give me an aok", "tell me an act of kindness to do", "can you suggest an aok?", "what is an example of act of kindness?"],
+            "patterns": ["suggest aok", "give me an aok", "tell me an act of kindness to do", "can you suggest an aok?", "what is an example of act of kindness?", "tell a kind act", "suggest a kind act", "suggest a kindness act", "tell me a kindness act", "show me a kind act"],
             "responses":["here you go!", "please use this"]
         },
 
