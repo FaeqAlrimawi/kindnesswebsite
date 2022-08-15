@@ -142,6 +142,10 @@ padding-left: 30px;  /* width of the image plus a little extra padding */
 /* Messages */
 .chatbox__messages {
     padding: 0 20px;
+    display: table-cell;
+    vertical-align: bottom;
+
+    
     
 }
 
@@ -150,6 +154,8 @@ padding-left: 30px;  /* width of the image plus a little extra padding */
     background: #E0E0E0;
     padding: 8px 12px;
     max-width: 70%;
+    
+    
 }
 
 .messages__item--visitor,
@@ -167,7 +173,7 @@ padding-left: 30px;  /* width of the image plus a little extra padding */
     border-bottom-right-radius: 20px;
     background: var(--primary);
     color: white;
-    animation: fade-in-left 0.4s ease-in-out both;
+    /*animation: fade-in-left 0.4s ease-in-out both;*/
 }
 
 /* FOOTER */
