@@ -78,7 +78,7 @@
     background: orange;
     max-width: 60.6%;
     width: fit-content;
-    font-size: large;
+    /* font-size: large; */
 }
 
 .messages__item a {
