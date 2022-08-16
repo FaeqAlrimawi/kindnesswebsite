@@ -66,6 +66,11 @@ class Aok(db.Model):
         
         return False
     
+    def getMediaLinks(self):
+        media_ids = AokMedia.query.with_entities(AokMedia.media_id).filter_by(aok_id=self.id).all()
+        return [DigitalMedia.query.filter_by(id=media.media_id).one() for media in media_ids]
+    # DigitalMedia.query.with_entities(DigitalMedia.url).filter(DigitalMedia.id.in_()) id=media_ids).all()
+    
     
 class DigitalMedia(db.Model):
     
