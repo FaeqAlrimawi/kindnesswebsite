@@ -1,10 +1,6 @@
-from email.policy import default
-from email.quoprimime import unquote
-from sqlalchemy import PrimaryKeyConstraint
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
-# from sqlalchemy import Enum
 import enum
 
 
@@ -61,11 +57,22 @@ class Aok(db.Model):
             'date': self.date,
             'source': self.source
         }
+        
+    def isTrained(self):
+        cnt = ModelAok.query.filter_by(aok_id=self.id).count()       
+
+        if cnt >0:
+            return True
+        
+        return False
     
     
-class Media(db.Model):
+class DigitalMedia(db.Model):
+    
+    __name__="media"
+     
     id = db.Column(db.Integer, primary_key=True)
-    uri = db.Column(db.String(1000), unique=True)
+    url = db.Column(db.String(1000), unique=True)
     type = db.Column(db.Enum(MediaType))
     aoks = db.relationship('AokMedia',  cascade = 'all, delete-orphan', lazy = 'dynamic')
     
@@ -73,7 +80,7 @@ class Media(db.Model):
 class AokMedia(db.Model): 
     id = db.Column(db.Integer, primary_key=True)  
     aok_id =  db.Column(db.Integer, db.ForeignKey('aok.id'))
-    media_id = db.Column(db.Integer, db.ForeignKey('media.id'))
+    media_id = db.Column(db.Integer, db.ForeignKey('digital_media.id'))
     
     
 class AokQuote(db.Model):

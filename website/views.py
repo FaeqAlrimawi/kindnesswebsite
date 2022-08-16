@@ -3,6 +3,7 @@
 # from numpy import result_type
 # import pandas as pd
 from email.policy import default
+from msilib.schema import Media
 from urllib import response
 from flask import Blueprint, flash, jsonify, render_template, request, redirect, Markup, session, abort
 # import os
@@ -10,13 +11,13 @@ from flask_login import login_required, current_user
 
 from website.chatbot.chat import get_response
 from . import db
-from .models import Aok, NonAok, ScrapperSentence, User, WebsiteScrapper
+from .models import Aok, AokMedia, DigitalMedia,  NonAok, ScrapperSentence, User, WebsiteScrapper
 import json
-from .control import canScrap, checkIfAoK, doesAoKExist, getBaseURL, getModelsInfo, getRobotsURL, getSentenceFromDB, getSiteMaps, populateDatabaseWithAoKs, populateDatabaseWithNonAoKs, populateModelTable, removeFromSentences,  scrapWebsite, addAoK
+from .control import canScrap, checkIfAoK, doesAoKExist,  getBaseURL, getModelsInfo, getRobotsURL, getSentenceFromDB, getSiteMaps, removeFromSentences,  scrapWebsite, addAoK
 # import website
 from werkzeug.security import generate_password_hash
 from flask_login import login_user
-
+from .utils.DB_OP import populateDatabaseWithAoKs, populateDatabaseWithNonAoKs, populateModelTable, exportDB
 
 views = Blueprint("views", __name__)
 
@@ -42,6 +43,7 @@ def home():
     populateDatabaseWithAoKs()
     populateDatabaseWithNonAoKs()  
         
+    exportDB()
                 
     return render_template("home.html", user=current_user)
 
@@ -88,8 +90,9 @@ def editAoK():
     
     if request.method == 'POST':
         aok = request.form.get('aok')
+        mediaURL = request.form.get('mediaURL')
         
-        if len(aok)<1:
+        if len(aok)<5:
             flash("Act too short!", category='error')
             
         else:
@@ -97,6 +100,21 @@ def editAoK():
             db.session.add(new_aok)
             db.session.commit()
             
+            if mediaURL:
+                # check if the media url already exists
+                mediaObj = DigitalMedia.query.filter_by(url=mediaURL).first()
+                
+                if mediaObj is None:
+                    mediaObj = DigitalMedia(url=mediaURL)
+                    db.session.add(mediaObj)
+                    db.session.commit()
+            
+                # link te media to the act
+                aokMedia = AokMedia(aok_id=new_aok.id,media_id=mediaObj.id)   
+                db.session.add(aokMedia)
+                db.session.commit()
+        
+                # print("media: ", aokMedia)                    
             flash("Act added successfully", category='success')
             
     return render_template("editAoK.html", user=current_user)
@@ -261,6 +279,7 @@ def add_AoK():
             return jsonify(res)
         else:
             return jsonify({'message':'error'})
+
 
 
 @views.route('/update-prob', methods=['POST'])

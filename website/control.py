@@ -4,6 +4,7 @@
 # from multiprocessing.dummy import active_children
 
 from datetime import datetime
+from email import header
 import pickle
 from urllib.request import urlopen
 from sklearn.cluster import dbscan
@@ -31,6 +32,8 @@ from urllib.parse import urlparse
 import string
 import pandas as pd
 # from .views import websiteURL
+import postgres_copy
+import xlsxwriter
  
 model = None
 
@@ -48,6 +51,8 @@ def load_Model_and_Features():
       
     if not features_file:
        features_file = pickle.load(open("./website/static/AoK_features.pkl", "rb"))
+       
+    return model, features_file       
 
 
 def addAoK(aok, source):
@@ -497,36 +502,7 @@ def getSentenceFromDB(sentID):
     return sentence
      
 
-def populateModelTable():
-    global model
-    global features_file
-    
-    if not model:
-        load_Model_and_Features()
-    
-   
-    if len(NLPModel.query.all()) ==0 : 
-        # print("###  creating a new model")       
-        new_model = NLPModel(model=str(model), features=features_file)
-        
-        if new_model:
-            db.session.add(new_model)
-            res = db.session.commit()  
-        else:
-            print("problem creating a new model")  
-        
-    # newAok = Aok(act="testing")
-    # db.session.add(newAok)
-    # db.session.commit()
-    
-    # models = NLPModel.query.all()
-    
-    # for model in models:
-    #     newModelAok = ModelAok(model_id=model.id, aok_id=newAok.id)
-    #     db.session.add(newModelAok)
-    #     db.session.commit()
-    #     print(str(model.model))   
-         
+
     
 def getModelsInfo():
       ### info: name, # of aok, # of non-aok
@@ -545,97 +521,16 @@ def getModelsInfo():
           
       return modelsInfo
   
-  
-def populateDatabaseWithAoKs():
-    
-    # already loaded
-    if Aok.query.first() is not None:
-        return
-    
-    # file_name = url_for('website/static', filename='actsOfKindness.xlsx')
-    file_name = './website/static/actsOfKindness.xlsx'
-    sheet_name = 'All_AoKs'
-    description_column = 'Description'
-    trained_col = 'trained'
-    df = pd.read_excel(file_name, sheet_name=sheet_name, usecols=[description_column, trained_col])
-    
-    model = NLPModel.query.first()
-    
-    if model is None:
-        return 
-    
-    newAoks = []
-    newModelAoKs = []
-    for element in df.values:
-    
-        if len(element) >0 :
-            newAok = Aok(act=element[0])
-            if newAok:
-                newAoks.append(newAok)
-                # print(newAok.act)
-
-                isTrained = element[1]
-                if isTrained == 'yes':        
-                    newModelAok = ModelAok(model_id=model.id, aok_id=newAok.id)
-                    newModelAoKs.append(newModelAok)
-                    
-                    
-    if len(newAoks) > 0:
-        db.session.add_all(newAoks)
-        db.session.commit()    
+ 
+       
+     
         
-    if len(newModelAoKs) >0:
-        db.session.add_all(newModelAoKs)
-        db.session.commit()    
-        
-    return      
-          
-
-def populateDatabaseWithNonAoKs():
     
-    # already loaded
-    if NonAok.query.first() is not None:
-        # print("already added non-aoks")
-        return
+     
     
-    # file_name = url_for('website/static', filename='actsOfKindness.xlsx')
-    file_name = './website/static/actsOfKindness.xlsx'
-    sheet_name = 'All_NonAoks'
-    description_column = 'Description'
-    trained_col = 'trained'
-    df = pd.read_excel(file_name, sheet_name=sheet_name, usecols=[description_column, trained_col])
-    
-    model = NLPModel.query.first()
-    
-    if model is None:
-        return
-    
-    newNonAoks = []
-    newModelNonAoKs = []
-    for element in df.values:
-    
-        if len(element) >0 :
-            newNonAok = NonAok(act=element[0])
-            if newNonAok:
-                newNonAoks.append(newNonAok)
-                # print(newAok.act)
-
-                isTrained = element[1]
-                if isTrained == 'yes':        
-                    newModelNonAok = ModelNonAok(model_id=model.id, non_aok_id=newNonAok.id)
-                    newModelNonAoKs.append(newModelNonAok)
-                    
-                    
-    if len(newNonAoks) > 0:
-        db.session.add_all(newNonAoks)
-        db.session.commit()    
-        
-    if len(newModelNonAoKs) >0:
-        db.session.add_all(newModelNonAoKs)
-        db.session.commit()    
-        
-    return                
       
-        
-        
+      
+      
+      
+         
      
