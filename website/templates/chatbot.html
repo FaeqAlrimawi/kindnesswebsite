@@ -8,12 +8,12 @@
 {% block  content%}
 
 
-<div class="chatbox" style="width: 60%; height: 70%;">
+<div class="chatbox" style="width: 50%; height: 80%;">
     <div class="chatbox__support" style="width: 100%; height: 100%;">
 
         <div class="chatbox__header">
             <div class="chatbox__image--header">
-                <img src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-5--v1.png" alt="image">
+                <img src="https://spare.lero.ie/wp-content/uploads/2022/08/eleos.png" width="75px" height="80px" alt="image" id="imgEleos" onmouseover="enlargeImg()" onmouseout="resetImg()">
             </div>
 
             <div class="chatbox__heading--header">
@@ -45,6 +45,24 @@
 
 
 {% block scripts  %}
+
+<script>
+    // Get the img object using its Id
+    img = document.getElementById("imgEleos");
+    // Function to increase image size
+    function enlargeImg() {
+      // Set image size to 1.5 times original
+      img.style.transform = "scale(2.5)";
+      // Animation effect
+      img.style.transition = "transform 0.25s ease";
+    }
+    // Function to reset image size
+    function resetImg() {
+      // Set image size to original
+      img.style.transform = "scale(1)";
+      img.style.transition = "transform 0.25s ease";
+    }
+  </script>
 
 <!--<script>
     $SCRIPT_ROOT = {{ request.script_root|tojson }};
