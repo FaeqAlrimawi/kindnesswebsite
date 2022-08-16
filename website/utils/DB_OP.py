@@ -42,9 +42,9 @@ def populateDatabaseWithAoKs():
         return
     
     # file_name = url_for('website/static', filename='actsOfKindness.xlsx')
-    file_name = './website/static/acts.xlsx'
-    sheet_name = 'aoks'
-    description_column = 'act'
+    file_name = './website/static/actsOfKindness.xlsx'
+    sheet_name = 'All_AoKs'
+    description_column = 'Description'
     trained_col = 'trained'
     df = pd.read_excel(file_name, sheet_name=sheet_name, usecols=[description_column, trained_col])
     
