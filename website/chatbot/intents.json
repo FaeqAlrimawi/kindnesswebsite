@@ -4,43 +4,45 @@
 
         {"tag": "greeting",
         "patterns": ["Hi there", "How are you", "Is anyone there?", "Hello", "Good day", "hey", "what's up"],
-        "responses": ["Hello!", "Hi there", "Hi, how can I help?"],
-        "context": [""]
+        "responses": ["Hello!", "Hi there", "Hi, how can I help?"]
        },
        {"tag": "goodbye",
         "patterns": ["Bye", "See you later", "Goodbye", "Nice chatting to you, bye", "Till next time"],
-        "responses": ["See you!", "Have a nice day", "Bye! Come back again soon."],
-        "context": [""]
+        "responses": ["See you!", "Have a nice day", "Bye! Come back again soon."]
        },
 
        {"tag": "thanks",
         "patterns": ["Thanks", "Thank you", "That's helpful", "Awesome, thanks", "Thanks for helping me"],
-        "responses": ["Happy to help!", "Any time!", "My pleasure"],
-        "context": [""]
+        "responses": ["Happy to help!", "Any time!", "My pleasure"]
        },
 
        {"tag": "botIdentity",
         "patterns": ["who are you?", "Why your name is Eleos", "Eleos?", "What does Eleos mean?", "nice name"],
-        "responses": ["I'm named after the greek Goddess <a href=\"https://www.theoi.com/Daimon/Eleos.html\" target=\"_blank\">Eleos</a> - the goddess of compassion and kindness."],
-        "context": [""]
+        "responses": ["I'm named after the greek Goddess <a href=\"https://www.theoi.com/Daimon/Eleos.html\" target=\"_blank\">Eleos</a> - the goddess of compassion and kindness."]
        },
 
        {"tag": "noanswer",
         "patterns": [],
-        "responses": ["Sorry, can't understand you", "Please give me more info", "Not sure I understand"],
-        "context": [""]
+        "responses": ["Sorry, can't understand you", "Please give me more info", "Not sure I understand"]
        },
 
        {"tag": "options",
         "patterns": ["How you could help me?", "What you can do?", "What help you provide?", "How you can be helpful?", "What support is offered"],
-        "responses": ["I can tell you about Kind Computing, suggest acts of kindness for you, or guess if an act is a kind one :-)"],
-        "context": [""]
+        "responses": ["I can tell you about Kind Computing, suggest acts of kindness for you, or guess if an act is a kind one :-)"]
        },
         
         {
             "tag":"suggestAok",
             "patterns": ["suggest aok", "give me an aok", "tell me an act of kindness to do", "can you suggest an aok?", "what is an example of act of kindness?", "tell a kind act", "suggest a kind act", "suggest a kindness act", "tell me a kindness act", "show me a kind act"],
             "responses":["here you go!", "please use this"]
+        },
+
+        {
+            "tag":"WhatIskindness",
+            "patterns": ["what is kindness", "the meaning of kindness", "what does it mean to be kind?", "what doe sit mean to be a kind person?", "what is a kind human?", "kindness?", "kindness!"],
+            "responses":["Kindness is acting with the motivation of helping and benefiting others."],
+            "responses2":["Kindness have also been defined by various terms such as prosociality, norms, benevolence, etc."],
+            "responses3":["To know more about kindness I recommend you have a look at <a href=\"https://www.mentalhealth.org.uk/explore-mental-health/kindness\" target=\"_blank\">UK's mental-health organisation</a>"]
         },
 
         {

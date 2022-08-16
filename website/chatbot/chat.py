@@ -92,8 +92,15 @@ def get_response(sentence):
                         return(suggestedAok)   
                     case _:
                         msgs =  [random.choice(intent["responses"])]
-                        if "responses2" in intent:
-                            msgs.append(random.choice(intent["responses2"]))
+                        # other responses?
+                        length = len(intent)
+                        print("length ", length)
+                        #if length more than three: tag, pattern, reponses, then there are more responses (need to be careful I might include other items)
+                        for index in range(2, length-1):
+                            response = f'responses{index}'
+                            print("res ", response)
+                            if response in intent:
+                                msgs.append(random.choice(intent[response]))
                         return msgs    
 
     return ["I don't understand..."]
@@ -117,7 +124,7 @@ def suggestAoK(categories):
         
         if randAok is not None:
             # return randAok.act
-            msgs.append(randAok.act)
+            msgs.append("A kind act >> "+randAok.act)
             if not isAokSuggested:
                 extraMsg = "Would you like another? You can specify a category by typing \"for friend, family, coworker, stranger\""
                 isAokSuggested = True
@@ -128,7 +135,7 @@ def suggestAoK(categories):
                 isAokSuggestedCounter = isAokSuggestedCounter-1
                 if isAokSuggestedCounter == 0:
                     isAokSuggested = False
-                    isAokSuggestedCounter = 5
+                    isAokSuggestedCounter = random.randint(1,5)
             
             
     else:

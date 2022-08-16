@@ -1,3 +1,5 @@
+var mediumLength = 100; // sentence avg. length: 20 words, a word on avg. is 5 letters
+
 class Chatbot {
 
     constructor(botName) {
@@ -164,8 +166,14 @@ scrollToBottom() {
 
 // compute message loading duration
 getMessageLoadingDuration(message) {
+
+    let msgLen = message.length;
+    let perc = Math.min(msgLen/mediumLength, 1.5);
 	//in here you could use message.length to show dots for longer duration based on the length of the message
-  const randomNum = message.length + Math.random() * 1000;
+  const randomNum = 1000*perc + Math.random() * 1000;
+
+//   console.log(`perc ${perc}, duration ${randomNum}`);
+
   return Math.round(randomNum / 100) * 100;
 }
 
@@ -183,6 +191,7 @@ createDots() {
   `
   el.classList.add("messages__item");
   el.classList.add("messages__item--operator");
+//   el.classList.add("dot-shuttle")
 
 	return el;
 }
@@ -214,7 +223,7 @@ chatbot.toggleState(chatbot.args.chatBox);
 chatbot.messages.push({name:chatbot.name, message: "Hi, I'm " +chatbot.name + ". How are you?"});
 
 chatbot.updateChatText([{name:chatbot.name, message: "Hi, I'm " +chatbot.name + ". How are you?"}]);
-
+// setTimeout(chatbot.showDots(), 2000);
 // chatbot.writeMessage([{name:"botName", message:"BBBBBBBBBBB"}, 
 // {name:"botName", message:"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"}], 0, true)
 
