@@ -28,10 +28,8 @@
             {% for media in aok.getMediaLinks() %}
             <div style="margin-right:3px;" >
                 <iframe frameborder="0"  onload="resizeIframe(this)"
-                src="{{media.url}}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+                src="{{media.url}}">
                 </iframe>  
-            <!--    <iframe width="1280" height="720" src="https://www.youtube.com/embed/nwAYpLVyeFU" title="Life Vest Inside - Kindness Boomerang - "One Day"" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>  
-            <object data="{{media.url}}" width="200"></object>-->
             </div>
             {% endfor %}
 
