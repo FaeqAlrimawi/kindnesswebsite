@@ -17,29 +17,31 @@
 
 <br/>
 <br/>
-<ul class="list-group list-group-flush" id="aoks">
-    {% for aok in user.acts %} 
-    <li class="list-group-item"> 
-        <div style=" display: flex; flex-direction: row">
-            <div style="margin-right:10px;">
-                {{aok.act}}
-            </div>
+<div style="overflow-y:auto; height:600px;">
 
-            {% for media in aok.getMediaLinks() %}
-            <div style="margin-right:3px;" >
-                <iframe frameborder="0"  onload="resizeIframe(this)"
+    {% for aok in user.acts %} 
+    <div style="margin-bottom:3px;border:0.3mm solid lightgrey; box-sizing: border-box;padding: 10px;align-items:center;display: flex; flex-direction: row;" > 
+
+            <button type="button" class="close" onClick="delete_AoK({{aok.id}})" style="margin-right:5px">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            
+             {% for media in aok.getMediaLinks() %}
+           
+                <iframe frameborder="0"  onload="resizeIframe(this)" style="margin-right:5px"
                 src="{{media.url}}">
                 </iframe>  
-            </div>
+           
             {% endfor %}
-
-        </div>
-        <button type="button" class="close" onClick="delete_AoK({{aok.id}})">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </li>
+           
+            <div style="overflow-wrap:break-word;word-wrap: break-word;">
+            {{aok.act}}
+            </div>
+        
+    </div>
     {% endfor%}
 
+</div>
 
 {% endblock%}
 

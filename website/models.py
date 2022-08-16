@@ -59,7 +59,7 @@ class Aok(db.Model):
         }
         
     def isTrained(self):
-        cnt = ModelAok.query.filter_by(aok_id=self.id).count()       
+        cnt = self.nlp_models.count()       
 
         if cnt >0:
             return True
@@ -67,9 +67,8 @@ class Aok(db.Model):
         return False
     
     def getMediaLinks(self):
-        media_ids = AokMedia.query.with_entities(AokMedia.media_id).filter_by(aok_id=self.id).all()
-        return [DigitalMedia.query.filter_by(id=media.media_id).one() for media in media_ids]
-    # DigitalMedia.query.with_entities(DigitalMedia.url).filter(DigitalMedia.id.in_()) id=media_ids).all()
+        return [DigitalMedia.query.filter_by(id=med.media_id).one() for med in self.media]
+    
     
     
 class DigitalMedia(db.Model):

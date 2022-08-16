@@ -167,6 +167,7 @@ def exportDB():
     worksheet.write(0, 2, "Date Added")
     worksheet.write(0, 3, "Trained")
     
+    count  =0
     # iterating through content list
     for aok in query :
         
@@ -177,13 +178,17 @@ def exportDB():
         
         worksheet.write(row, 2, aok.date)
         
-        worksheet.write(row, 3, "yes" if aok.isTrained() else "no")
+        isTrained = aok.isTrained()
+        worksheet.write(row, 3, "yes" if isTrained else "no")
+       
+        if isTrained:
+           count +=1
     
         # incrementing the value of row by one
         # with each iterations.
         row += 1
         
-    
+    print("########### ", count)
     row = 1
      # headers
     worksheetNonAoK.write(0, 0, "Act")

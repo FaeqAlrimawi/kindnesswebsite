@@ -31,8 +31,6 @@ from urllib.parse import urlparse
 # import ssl
 import string
 import pandas as pd
-# from .views import websiteURL
-import postgres_copy
 import xlsxwriter
  
 model = None
