@@ -20,7 +20,7 @@
 <div style="overflow-y:auto; height:600px;">
 
     {% for aok in user.acts %} 
-    <div style="margin-bottom:3px;border:0.3mm solid lightgrey; box-sizing: border-box;padding: 10px;align-items:center;display: flex; flex-direction: row;" > 
+    <div style="margin-bottom:5px;border:0.3mm solid lightgrey; box-sizing: border-box;padding: 10px;align-items:center;display: flex; flex-direction: row;" > 
 
             <button type="button" class="close" onClick="delete_AoK({{aok.id}})" style="margin-right:5px">
                 <span aria-hidden="true">&times;</span>
@@ -28,15 +28,16 @@
             
              {% for media in aok.getMediaLinks() %}
            
-                <iframe frameborder="0"  onload="resizeIframe(this)" style="margin-right:5px"
-                src="{{media.url}}">
-                </iframe>  
+                <img frameborder="0"  width="300px" height="150px" style="margin-right:5px" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+                src="{{media.url}}"></img>  
            
+                {{media.type}}
             {% endfor %}
            
             <div style="overflow-wrap:break-word;word-wrap: break-word;">
             {{aok.act}}
             </div>
+            
         
     </div>
     {% endfor%}

@@ -1,7 +1,3 @@
-### pages of the website
-# from operator import methodcaller
-# from numpy import result_type
-# import pandas as pd
 from email.policy import default
 from msilib.schema import Media
 from urllib import response
@@ -10,14 +6,17 @@ from flask import Blueprint, flash, jsonify, render_template, request, redirect,
 from flask_login import login_required, current_user
 
 from website.chatbot.chat import get_response
+from .utils.UrlManipulate import getMediaType
 from . import db
-from .models import Aok, AokMedia, DigitalMedia,  NonAok, ScrapperSentence, User, WebsiteScrapper
+from .models import Aok, AokMedia, DigitalMedia, MediaType,  NonAok, ScrapperSentence, User, WebsiteScrapper
 import json
 from .control import canScrap, checkIfAoK, doesAoKExist,  getBaseURL, getModelsInfo, getRobotsURL, getSentenceFromDB, getSiteMaps, removeFromSentences,  scrapWebsite, addAoK
 # import website
 from werkzeug.security import generate_password_hash
 from flask_login import login_user
 from .utils.DB_OP import populateDatabaseWithAoKs, populateDatabaseWithNonAoKs, populateModelTable, exportDB
+import mimetypes
+
 
 views = Blueprint("views", __name__)
 
@@ -105,7 +104,9 @@ def editAoK():
                 mediaObj = DigitalMedia.query.filter_by(url=mediaURL).first()
                 
                 if mediaObj is None:
-                    mediaObj = DigitalMedia(url=mediaURL)
+                    mediaType = getMediaType(mediaURL)
+                            
+                    mediaObj = DigitalMedia(url=mediaURL, type=mediaType)
                     db.session.add(mediaObj)
                     db.session.commit()
             

@@ -11,6 +11,9 @@ class MediaType(enum.Enum):
         EMOJI = "Emoji"
         EMOTICON = "Emoticon"
         STICKER = "Sticker"
+        YOUTUBE = "YouTube"
+        VIMEO = "Vimeo"
+        UNKNOWN = "Unknown"
               
       
 class ActType(enum.Enum):
