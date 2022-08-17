@@ -28,10 +28,19 @@
             
              {% for media in aok.getMediaLinks() %}
            
-                <img frameborder="0"  width="300px" height="150px" style="margin-right:5px" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
-                src="{{media.url}}"></img>  
-           
-                {{media.type}}
+             <!-- <iframe frameborder="0"  width="300px" height="150px" style="margin-right:5px"  src="{{media.url}}"></iframe>-->
+             {% if media.type.value == "Image" %}
+             <img frameborder="0"  width="300px" height="150px" style="margin-right:5px"  src="{{media.url}}"/>  
+             
+             {% elif media.type.value == "YouTube" %}
+             
+             <iframe id="frm" width="300" height="150" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+             <script>window.onload = function() { document.getElementById('frm').src = 'https://www.youtube.com/embed/' + getYouTubeID(media.url);}</script>
+             {% else %}
+             <iframe frameborder="0"  width="300px" height="150px" style="margin-right:5px"  src="{{media.url}}"></iframe> 
+
+             {% endif %}
+
             {% endfor %}
            
             <div style="overflow-wrap:break-word;word-wrap: break-word;">
@@ -54,6 +63,18 @@ function resizeIframe(obj) {
     obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
   }
 
+  function getYouTubeID(url) {
+
+    //alert();
+    return "yn9VxUPlC5g";
+  }
+
+
+    $(document).ready(function(){
+        //document.getElementById('frm').src = 'https://www.youtube.com/embed/' + getYouTubeID("");
+    });
+    
 </script>
+
 
 {% endblock  %}

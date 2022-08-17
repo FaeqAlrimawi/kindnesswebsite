@@ -47,6 +47,14 @@ def home():
     return render_template("home.html", user=current_user)
 
 
+@views.route('/media', methods=["POST", "GET"])
+def media():
+    
+    media = DigitalMedia.query.all()
+
+    return render_template("media.html", user=current_user, media=media)
+    
+    
 # the route of our website
 @views.route('/chatbot', methods=['GET', 'POST'])
 def chatbot():
