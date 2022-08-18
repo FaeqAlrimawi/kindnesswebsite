@@ -1,22 +1,29 @@
 {% extends 'base.html' %}
 
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/media.css')}}">
+{% endblock  %}
+
+
 {% block title %}Kindness Media{% endblock  %}
 
 
 {% block content %}
 
-<h1>Kindness Media</h1>
+<h1 align="center">Kindness Media</h1>
 
-<div style="overflow-y:auto; height:600px;">
 
     {% for med in media %} 
-    <div style="margin-bottom:5px;border:0.3mm solid lightgrey; box-sizing: border-box;padding: 10px;align-items:center;display: flex; flex-direction: row;" > 
+    <div class="column"> 
     
-        <iframe frameborder="0"  width="300px" height="150px" style="margin-right:5px"  src="{{med.url}}"></iframe>
-        <a href="{{med.url}}" target="_blank">{{med.url}}</a>
+        <iframe frameborder="0"  style="margin-right:5px"  src="{{med.url}}"></iframe>
+ 
     </div>
+
+    
     {% endfor %}
-</div>
+
+
 
 {% endblock  %}
 
