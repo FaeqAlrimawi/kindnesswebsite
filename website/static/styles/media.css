@@ -12,17 +12,22 @@
     float: left;
     width: 30%;
     padding: 30px;
-    animation:  1s ease-out appear;
+
+    
   }
 
   /* Style the images inside the grid */
 .column iframe {
     opacity: 0.8;
     cursor: pointer;
+
+
   }
   
   .column iframe:hover {
     opacity: 1;
+    transform: scale(1.1);
+    transition:  all 0.2s ease-in;
   }
 
   /* Clear floats after the columns */
@@ -47,10 +52,6 @@
   @keyframes appear {
     0% {
         opacity: 0;
-    }
-
-    50% {
-        opacity: 0.4;
     }
     100% {
         opacity: .8;
