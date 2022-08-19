@@ -96,12 +96,15 @@
 
 .category_parent {
   position: absolute;
-  display: flex;
-  flex-direction: row;
-  overflow-x: auto;
+  
+  
+
+  float: left;
   bottom: 25px;
   left:25px;
   width:90%;
+  overflow-wrap:break-word;
+  word-wrap: break-word;
 }
 
 .category_parent .category_tag{
@@ -109,7 +112,7 @@
   font-size: small;
   margin-right: 5px;
   background-color: blueviolet;
-  border-radius: 15px;
+  border-radius: 10px;
   color: white;
   opacity:0;
 

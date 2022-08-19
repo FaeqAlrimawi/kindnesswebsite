@@ -8,7 +8,7 @@ from flask_login import login_required, current_user
 from website.chatbot.chat import get_response
 from .utils.UrlManipulate import getMediaType
 from . import db
-from .models import Aok, AokMedia, Category, DigitalMedia, MediaCategories, MediaType,  NonAok, ScrapperSentence, User, WebsiteScrapper
+from .models import Aok, AokCategories, AokMedia, Category, DigitalMedia, MediaCategories, MediaType,  NonAok, ScrapperSentence, User, WebsiteScrapper
 import json
 from .control import canScrap, checkIfAoK, doesAoKExist,  getBaseURL, getModelsInfo, getRobotsURL, getSentenceFromDB, getSiteMaps, removeFromSentences,  scrapWebsite, addAoK
 # import website
@@ -164,33 +164,60 @@ def editAoK():
     if request.method == 'POST':
         aok = request.form.get('aok')
         mediaURL = request.form.get('mediaURL')
-        
+        categories = request.form.get('actCategory')
+         
         if len(aok)<5:
-            flash("Act too short!", category='error')
+            flash("Act too short", category='error')
+            render_template("editAoK.html", user=current_user)
             
-        else:
-            new_aok = Aok(act=aok, user_id=current_user.id)
-            db.session.add(new_aok)
+        aokObj = Aok.query.filter_by(act=str(aok)).first()
+        
+        if aokObj is None:
+            aokObj = Aok(act=aok, user_id=current_user.id)
+            db.session.add(aokObj)
             db.session.commit()
+         
+        mediaObj = None 
+           
+        if mediaURL:
+            # check if the media url already exists
+            mediaObj = DigitalMedia.query.filter_by(url=mediaURL).first()
             
-            if mediaURL:
-                # check if the media url already exists
-                mediaObj = DigitalMedia.query.filter_by(url=mediaURL).first()
-                
-                if mediaObj is None:
-                    mediaType = getMediaType(mediaURL)
-                            
-                    mediaObj = DigitalMedia(url=mediaURL, type=mediaType)
-                    db.session.add(mediaObj)
-                    db.session.commit()
-            
-                # link te media to the act
-                aokMedia = AokMedia(aok_id=new_aok.id,media_id=mediaObj.id)   
-                db.session.add(aokMedia)
+            if mediaObj is None:
+                mediaType = getMediaType(mediaURL)
+                        
+                mediaObj = DigitalMedia(url=mediaURL, type=mediaType)
+                db.session.add(mediaObj)
                 db.session.commit()
         
-                # print("media: ", aokMedia)                    
-            flash("Act added successfully", category='success')
+            # link te media to the act
+            aokMedia = AokMedia(aok_id=aokObj.id,media_id=mediaObj.id)   
+            db.session.add(aokMedia)
+            db.session.commit()
+        
+        cats = categories.split(",") if "," in categories else [categories]
+        
+        for cat in cats:
+            catObj = Category.query.filter_by(name=str(cat)).first()
+            
+            if catObj is None:
+                catObj = Category(name=str(cat))
+                db.session.add(catObj)
+                db.session.commit()
+               
+            # add links to act and media
+            if AokCategories.query.filter_by(aok_id=aokObj.id, category_id=catObj.id).first() is None:
+                aokCat = AokCategories(aok_id=aokObj.id, category_id=catObj.id)
+                db.session.add(aokCat)
+                db.session.commit()  
+                
+            if MediaCategories.query.filter_by(media_id=mediaObj.id, category_id=catObj.id).first() is None:
+                medCat = MediaCategories(media_id=mediaObj.id, category_id=catObj.id)
+                db.session.add(medCat)
+                db.session.commit()            
+                        
+    
+        flash("Act added successfully", category='success')
             
     return render_template("editAoK.html", user=current_user)
 

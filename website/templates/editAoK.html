@@ -8,6 +8,7 @@
 <form method='POST'>
 <textarea name="aok" id='aok' class='form-control' placeholder="Enter act description"></textarea>
 <input type="url"   id="mediaURL" name="mediaURL" placeholder="Media URL" class='form-control' style="margin-top:20px;"/>
+<input type="text"   id="actCategory" name="actCategory" placeholder="Categories (e.g., family, school, social-media)... " class='form-control' style="margin-top:20px;"/>
 <!--<button type="file" class="btn btn-primary">Add AoK</button>-->
 <br/>
 <div align='center'>
@@ -43,9 +44,18 @@
 
             {% endfor %}
            
+            <div style="display:flex;flex-direction: column; overflow-y: auto;">
             <div style="overflow-wrap:break-word;word-wrap: break-word;">
             {{aok.act}}
             </div>
+          
+            <div style="float:left;margin-top: 20px">
+            {% for cat in aok.getCategories() %}
+              <label style="margin-right:5px;background-color:rgba(101, 32, 165); border-radius: 10px; padding: 5px; color:white">{{cat.name}}</label>
+            {% endfor %}
+           </div>
+          
+          </div>
             
         
     </div>

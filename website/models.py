@@ -73,6 +73,10 @@ class Aok(db.Model):
         return [DigitalMedia.query.filter_by(id=med.media_id).one() for med in self.media]
     
     
+    def getCategories(self):
+        return [Category.query.filter_by(id=actCat.category_id).one() for actCat in self.categories]
+
+
     
 class DigitalMedia(db.Model):
     
