@@ -42,7 +42,7 @@ def home():
     populateDatabaseWithAoKs()
     populateDatabaseWithNonAoKs()  
         
-    exportDB()
+    # exportDB()
                 
     return render_template("home.html", user=current_user)
 
@@ -166,9 +166,9 @@ def editAoK():
         mediaURL = request.form.get('mediaURL')
         categories = request.form.get('actCategory')
          
-        if len(aok)<5:
-            flash("Act too short", category='error')
-            render_template("editAoK.html", user=current_user)
+        if aok is None or len(aok)<5:
+            flash("Act is too short", category='error')
+            return render_template("editAoK.html", user=current_user)
             
         aokObj = Aok.query.filter_by(act=str(aok)).first()
         
@@ -180,6 +180,7 @@ def editAoK():
         mediaObj = None 
            
         if mediaURL:
+
             # check if the media url already exists
             mediaObj = DigitalMedia.query.filter_by(url=mediaURL).first()
             
@@ -195,28 +196,29 @@ def editAoK():
             db.session.add(aokMedia)
             db.session.commit()
         
-        cats = categories.split(",") if "," in categories else [categories]
-        
-        for cat in cats:
-            catObj = Category.query.filter_by(name=str(cat)).first()
-            
-            if catObj is None:
-                catObj = Category(name=str(cat))
-                db.session.add(catObj)
-                db.session.commit()
-               
-            # add links to act and media
-            if AokCategories.query.filter_by(aok_id=aokObj.id, category_id=catObj.id).first() is None:
-                aokCat = AokCategories(aok_id=aokObj.id, category_id=catObj.id)
-                db.session.add(aokCat)
-                db.session.commit()  
-                
-            if MediaCategories.query.filter_by(media_id=mediaObj.id, category_id=catObj.id).first() is None:
-                medCat = MediaCategories(media_id=mediaObj.id, category_id=catObj.id)
-                db.session.add(medCat)
-                db.session.commit()            
-                        
+        if categories is not None and len(categories)>0:
+            cats = categories.split(",") if "," in categories  else [categories]
     
+            for cat in cats:
+                catObj = Category.query.filter_by(name=str(cat)).first()
+                
+                if catObj is None:
+                    catObj = Category(name=str(cat))
+                    db.session.add(catObj)
+                    db.session.commit()
+                
+                # add links to act and media
+                if AokCategories.query.filter_by(aok_id=aokObj.id, category_id=catObj.id).first() is None:
+                    aokCat = AokCategories(aok_id=aokObj.id, category_id=catObj.id)
+                    db.session.add(aokCat)
+                    db.session.commit()  
+                    
+                if MediaCategories.query.filter_by(media_id=mediaObj.id, category_id=catObj.id).first() is None:
+                    medCat = MediaCategories(media_id=mediaObj.id, category_id=catObj.id)
+                    db.session.add(medCat)
+                    db.session.commit()            
+                            
+        
         flash("Act added successfully", category='success')
             
     return render_template("editAoK.html", user=current_user)
