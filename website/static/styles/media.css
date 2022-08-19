@@ -15,7 +15,7 @@
     height: 200px;
     padding: 30px;
    position: relative;
-
+   
     
   }
 
@@ -93,6 +93,35 @@
 .closebtn:hover{
   background-color: rgb(134, 12, 52);;
 }
+
+.category_parent {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  bottom: 25px;
+  left:25px;
+  width:90%;
+}
+
+.category_parent .category_tag{
+  padding: 5px;
+  font-size: small;
+  margin-right: 5px;
+  background-color: blueviolet;
+  border-radius: 15px;
+  color: white;
+  opacity:0;
+
+}
+
+.column:hover .category_tag{
+    opacity: 1;
+
+    transition:  all 0.2s ease-in;
+
+  }
+
 
 .album_container {
   margin: 0;

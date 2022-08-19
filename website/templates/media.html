@@ -14,7 +14,8 @@
 <h1 align="center">Kindness Media</h1>
 
 <form method='POST'>
-    <input type="url"   id="mediaURL" name="mediaURL" placeholder="Add Media URL... " class='form-control' style="margin-top:20px;"/>
+    <input type="url"   id="mediaURL" name="mediaURL" placeholder="Media URL... " class='form-control' style="margin-top:20px;"/>
+    <input type="text"   id="mediaCategory" name="mediaCategory" placeholder="categories (e.g., family, school, social-media)... " class='form-control' style="margin-top:20px;"/>
     <!--<button type="file" class="btn btn-primary">Add AoK</button>-->
     <br/>
     <div align='center'>
@@ -25,7 +26,7 @@
 <br/><br/> 
 <hr style="border-width:3px">
 
-<div >
+<div>
 
 {% for med in media %} 
     <div class="column" style="display:none;"> 
@@ -43,15 +44,20 @@
 
         <span onclick="delete_media({{med.id}})" class="closebtn">&times;</span>
 
-
+        <div class="category_parent">
+        {% for  cat in med.getCategories() %}
+        <label class="category_tag">{{cat.name}}</label>
+        {% endfor %}
+        </div>
     </div>
     {% endfor %}
 
-</div>
+    
 
-<br/>
-<br/>
-<button  id="load" align="center">Load More</button>
+
+<button  id="load" width="30%" align="center" class="column">Load More</button>
+
+</div>
 
 
 {% endblock  %}

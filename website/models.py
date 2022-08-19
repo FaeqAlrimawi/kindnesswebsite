@@ -48,7 +48,7 @@ class Aok(db.Model):
     act = db.Column(db.String(1000))
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     source = db.Column(db.String(1000))
-    categories = db.relationship('AokCategories', cascade = 'all, delete-orphan', lazy = 'dynamic')
+    categories = db.relationship('AokCategories', lazy = 'dynamic')
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     nlp_models = db.relationship('ModelAok', cascade = 'all, delete-orphan', lazy = 'dynamic')
     media = db.relationship('AokMedia',  cascade = 'all, delete-orphan', lazy = 'dynamic')
@@ -81,8 +81,12 @@ class DigitalMedia(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String(1000), unique=True)
     type = db.Column(db.Enum(MediaType))
+    categories = db.relationship('MediaCategories',  lazy = 'dynamic')
     aoks = db.relationship('AokMedia',  cascade = 'all, delete-orphan', lazy = 'dynamic')
     
+    def getCategories(self):
+        return [Category.query.filter_by(id=medCat.category_id).one() for medCat in self.categories]
+        
         
 class AokMedia(db.Model): 
     id = db.Column(db.Integer, primary_key=True)  
@@ -121,7 +125,8 @@ class NonAok(db.Model):
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(1000), unique=True)
-    acts = db.relationship('AokCategories', cascade = 'all, delete-orphan', lazy = 'dynamic')
+    acts = db.relationship('AokCategories', lazy = 'dynamic')
+    media = db.relationship('MediaCategories',  lazy = 'dynamic')
     
     def to_dict(self):
         return {
@@ -135,7 +140,13 @@ class AokCategories(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))  
     aok_id =  db.Column(db.Integer, db.ForeignKey('aok.id'))
       
-    
+      
+class MediaCategories(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))  
+    media_id =  db.Column(db.Integer, db.ForeignKey('digital_media.id'))
+  
+     
 class NLPModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)    
     model = db.Column(db.PickleType)

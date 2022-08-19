@@ -8,7 +8,7 @@ from flask_login import login_required, current_user
 from website.chatbot.chat import get_response
 from .utils.UrlManipulate import getMediaType
 from . import db
-from .models import Aok, AokMedia, DigitalMedia, MediaType,  NonAok, ScrapperSentence, User, WebsiteScrapper
+from .models import Aok, AokMedia, Category, DigitalMedia, MediaCategories, MediaType,  NonAok, ScrapperSentence, User, WebsiteScrapper
 import json
 from .control import canScrap, checkIfAoK, doesAoKExist,  getBaseURL, getModelsInfo, getRobotsURL, getSentenceFromDB, getSiteMaps, removeFromSentences,  scrapWebsite, addAoK
 # import website
@@ -52,26 +52,56 @@ def media():
     
      
      media = DigitalMedia.query.all()
+     
      if request.method == 'POST':
         mediaURL = request.form.get('mediaURL')
-    
+        mediaCategories = request.form.get('mediaCategory')
+        medCats = mediaCategories.split(",") if "," in mediaCategories else [mediaCategories]
+        
+        exists = False
+        
+        
         if mediaURL:
             # check if the media url already exists
             mediaObj = DigitalMedia.query.filter_by(url=mediaURL).first()
             
-            if mediaObj is not None:
-                flash("Media already exists", category="error")
-                
-                return render_template("media.html", user=current_user, media=media)
-            
-            mediaType = getMediaType(mediaURL)
+            if mediaObj is None:
+                mediaType = getMediaType(mediaURL)
                     
-            mediaObj = DigitalMedia(url=mediaURL, type=mediaType)
-            db.session.add(mediaObj)
-            db.session.commit()
-         
+                mediaObj = DigitalMedia(url=mediaURL, type=mediaType)
+                db.session.add(mediaObj)
+                db.session.commit() 
+            else:
+                exists = True
+                flash("Media already exists. Updating it's categories, if any.", category="warning")    
+            
+            
+            if mediaObj is not None:
+                # add categories
+                if medCats:
+                    for cat in medCats:
+                        # get category
+                        catObj = Category.query.filter_by(name=str(cat)).first()
+                        
+                        if catObj is None:
+                            # create new category
+                            catObj = Category(name=str(cat))
+                            db.session.add(catObj)
+                            db.session.commit()
+                            
+                        # create links
+                        if MediaCategories.query.filter_by(media_id=mediaObj.id,category_id=catObj.id).first() is None:
+                            medCatLink = MediaCategories(media_id=mediaObj.id,category_id=catObj.id)
+                            db.session.add(medCatLink)
+                            db.session.commit()
+                # flash("Media already exists", category="error")
+                # return render_template("media.html", user=current_user, media=media)
+            
+            if not exists:
+                flash("Media added successfully", category="success")
+            
             media = DigitalMedia.query.all()
-            flash("Media added successfully", category="success")
+            
             return render_template("media.html", user=current_user, media=media)
         
      
