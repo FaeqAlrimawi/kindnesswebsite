@@ -42,13 +42,16 @@
 
         {% endif %}
 
-        <span onclick="delete_media({{med.id}})" class="closebtn">&times;</span>
+        
 
         <div class="category_parent">
         {% for  cat in med.getCategories() %}
         <label class="category_tag">{{cat.name}}</label>
         {% endfor %}
         </div>
+
+        <span onclick="delete_media({{med.id}})" class="closebtn">&times;</span>
+        
     </div>
     {% endfor %}
 
