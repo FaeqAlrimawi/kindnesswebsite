@@ -11,7 +11,8 @@
   
 .column {
     float: left;
-    width: 30%;
+    width: 350px;
+    height: 200px;
     padding: 30px;
    position: relative;
 
@@ -88,3 +89,26 @@
   cursor: pointer;
   opacity: 0;
 }
+
+.closebtn:hover{
+  background-color: rgb(134, 12, 52);;
+}
+
+.album_container {
+  margin: 0;
+  width: 100%;
+  position: relative;
+}
+
+.load_more_btn {
+  width: 200px;
+  height: 70px;
+  font-size: large;
+  background-color: rgb(75, 184, 71);
+  text-align: center;
+  color: white;
+  position:sticky;
+  bottom: 0;
+  
+}
+

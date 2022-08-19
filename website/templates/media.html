@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<link href="https://cdn.jsdelivr.net/npm/nanogallery2@3/dist/css/nanogallery2.min.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/nanogallery2@3/dist/jquery.nanogallery2.min.js"></script>
+
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/media.css')}}">
 {% endblock  %}
 
@@ -26,20 +25,20 @@
 <br/><br/> 
 <hr style="border-width:3px">
 
-<div class="album_container">
+<div >
 
 {% for med in media %} 
-    <div class="column"> 
+    <div class="column" style="display:none;"> 
     
         
         {% if med.type.value=="Image" %}
-        <div class="box">
-        <img class="box"   src="{{med.url}}"></img>
-        </div>
+
+        <img  class="box" src="{{med.url}}"></img>
+
         {% else %}
-        <div class="box">
-        <iframe   align="center" frameborder=0 src="{{med.url}}"></iframe>
-        </div>
+
+        <iframe    align="center" frameborder=0 src="{{med.url}}"></iframe>
+
         {% endif %}
 
         <span onclick="delete_media({{med.id}})" class="closebtn">&times;</span>
@@ -47,8 +46,12 @@
 
     </div>
     {% endfor %}
+
 </div>
 
+<br/>
+<br/>
+<button  id="load" align="center">Load More</button>
 
 
 {% endblock  %}
@@ -56,4 +59,20 @@
 
 {% block scripts%}
 
+<script>
+    $(document).ready(function(){
+    $(function(){
+        $(".column").slice(0, 6).show(); // select the first ten
+        $("#load").click(function(e){ // click event for load more
+            e.preventDefault();
+            $(".column:hidden").slice(0, 6).show(); // select next 10 hidden divs and show them
+            if($(".column:hidden").length == 0){ // check if any hidden divs still exist
+                //alert("No more divs"); // alert if there are none left
+                $("#load").prop('disabled', true);
+            }
+        });
+    });
+});
+
+</script>
 {% endblock %}
