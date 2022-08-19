@@ -14,16 +14,40 @@
 
 <h1 align="center">Kindness Media</h1>
 
+<form method='POST'>
+    <input type="url"   id="mediaURL" name="mediaURL" placeholder="Add Media URL... " class='form-control' style="margin-top:20px;"/>
+    <!--<button type="file" class="btn btn-primary">Add AoK</button>-->
+    <br/>
+    <div align='center'>
+    <button type="submit" class="btn btn-primary">Add Media</button>
+    </div>
+    </form>
+
+<br/><br/> 
+<hr style="border-width:3px">
+
+<div class="album_container">
 
 {% for med in media %} 
     <div class="column"> 
     
-        <iframe frameborder="0"  width="100%" height="100%" style="margin-right:5px"  src="{{med.url}}"></iframe>
- 
-    </div>
+        
+        {% if med.type.value=="Image" %}
+        <div class="box">
+        <img class="box"   src="{{med.url}}"></img>
+        </div>
+        {% else %}
+        <div class="box">
+        <iframe   align="center" frameborder=0 src="{{med.url}}"></iframe>
+        </div>
+        {% endif %}
 
-    
+        <span onclick="delete_media({{med.id}})" class="closebtn">&times;</span>
+
+
+    </div>
     {% endfor %}
+</div>
 
 
 

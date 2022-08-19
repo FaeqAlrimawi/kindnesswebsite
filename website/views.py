@@ -50,10 +50,46 @@ def home():
 @views.route('/media', methods=["POST", "GET"])
 def media():
     
-    media = DigitalMedia.query.all()
-
-    return render_template("media.html", user=current_user, media=media)
+     
+     media = DigitalMedia.query.all()
+     if request.method == 'POST':
+        mediaURL = request.form.get('mediaURL')
     
+        if mediaURL:
+            # check if the media url already exists
+            mediaObj = DigitalMedia.query.filter_by(url=mediaURL).first()
+            
+            if mediaObj is not None:
+                flash("Media already exists", category="error")
+                
+                return render_template("media.html", user=current_user, media=media)
+            
+            mediaType = getMediaType(mediaURL)
+                    
+            mediaObj = DigitalMedia(url=mediaURL, type=mediaType)
+            db.session.add(mediaObj)
+            db.session.commit()
+         
+            media = DigitalMedia.query.all()
+            flash("Media added successfully", category="success")
+            return render_template("media.html", user=current_user, media=media)
+        
+     
+     return render_template("media.html", user=current_user, media=media)
+    
+    
+@views.route('/delete-media', methods=['POST'])
+def delete_media():
+    aok = json.loads(request.data)
+    mediaID = aok['mediaID']      
+    
+    media = DigitalMedia.query.get(mediaID)
+    # if media.user_id == current_user.id:
+    db.session().delete(media)
+    db.session.commit()
+        
+    return jsonify({})
+
     
 # the route of our website
 @views.route('/chatbot', methods=['GET', 'POST'])

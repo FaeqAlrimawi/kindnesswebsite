@@ -8,25 +8,33 @@
     width: 100%;
   }
 
+  
 .column {
     float: left;
     width: 30%;
     padding: 30px;
+   position: relative;
 
     
   }
 
   /* Style the images inside the grid */
-.column iframe {
-    opacity: 0.8;
+.column div {
+    opacity: 1;
     cursor: pointer;
-
+    
 
   }
   
-  .column iframe:hover {
+  .column:hover {
     opacity: 1;
-    transform: scale(1.1);
+    transform: scale(1.15);
+    transition:  all 0.2s ease-in;
+  }
+
+  .column:hover .closebtn{
+    opacity: 1;
+    transform: scale(1.15);
     transition:  all 0.2s ease-in;
   }
 
@@ -57,3 +65,26 @@
         opacity: .8;
     }
   }
+
+  .box {
+
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+
+  }
+
+  /* Closable button inside the image */
+.closebtn {
+  position: absolute;
+  top: 20px;
+  left: 35px;
+  margin-bottom: 5px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(238, 32, 101);
+  font-size: 25px;
+  cursor: pointer;
+  opacity: 0;
+}
