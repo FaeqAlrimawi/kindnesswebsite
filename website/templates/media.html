@@ -26,19 +26,19 @@
 <br/><br/> 
 <hr style="border-width:3px">
 
-<div>
+<div id="card-container">
 
 {% for med in media %} 
-    <div class="column" style="display:none;"> 
+    <div class="card"> 
     
         
         {% if med.type.value=="Image" %}
 
-        <img  class="box" src="{{med.url}}"></img>
+        <img   src="{{med.url}}"></img>
 
         {% else %}
 
-        <iframe    align="center" frameborder=0 src="{{med.url}}"></iframe>
+        <iframe   frameborder="0" class="responsive-iframe" src="{{med.url}}"></iframe>
 
         {% endif %}
 
@@ -55,12 +55,11 @@
     </div>
     {% endfor %}
 
-    
-
-
-<button  id="load" width="30%" align="center" class="column">Load More</button>
-
 </div>
+
+<div class="card-actions">
+    <button  id="#load-more">Load More</button>
+    </div>
 
 
 {% endblock  %}
@@ -71,13 +70,13 @@
 <script>
     $(document).ready(function(){
     $(function(){
-        $(".column").slice(0, 6).show(); // select the first ten
-        $("#load").click(function(e){ // click event for load more
+        $(".card").slice(0, 6).show(); // select the first ten
+        $("#load-more").click(function(e){ // click event for load more
             e.preventDefault();
-            $(".column:hidden").slice(0, 6).show(); // select next 10 hidden divs and show them
-            if($(".column:hidden").length == 0){ // check if any hidden divs still exist
+            $(".card:hidden").slice(0, 6).show(); // select next 10 hidden divs and show them
+            if($(".card:hidden").length == 0){ // check if any hidden divs still exist
                 //alert("No more divs"); // alert if there are none left
-                $("#load").prop('disabled', true);
+                $("#load-more").prop('disabled', true);
             }
         });
     });
