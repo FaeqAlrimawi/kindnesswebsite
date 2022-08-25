@@ -34,7 +34,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     first_name = db.Column(db.String(150))
-    acts = db.relationship('Aok') # link a user to their aoks (need to capitalise the name of the calss)
+    acts = db.relationship('Aok') # link a user to their aoks (need to capitalise the name of the class)
     non_aok_acts = db.relationship('NonAok')
     websites_scrapped = db.relationship('WebsiteScrapper')
     
@@ -137,12 +137,16 @@ class Category(db.Model):
             'name': self.name
         }
         
-
+    
+    
 ## association table between categories and aok showing which aoks belong to which categories      
 class AokCategories(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))  
     aok_id =  db.Column(db.Integer, db.ForeignKey('aok.id'))
+    
+    
+    
       
       
 class MediaCategories(db.Model):

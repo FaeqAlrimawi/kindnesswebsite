@@ -4,7 +4,7 @@ import json
 import torch
 from website.chatbot.model  import NeuralNet
 from website.chatbot.preprocessing import bag_of_words, tokenize
-from ..models import Aok
+from ..models import Aok, Category
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -137,8 +137,12 @@ def suggestAoK(categories):
             
             
     else:
-        #TODO: search with categories
         msgs.append("TBD")
+        # catObjs = [Category.query.filter_by(name=str(cat)).one() for cat in categories]
+        
+        
+           
+        
         
     if len(msgs) == 0:
         msgs.append("Sorry couldn't find one this time")
